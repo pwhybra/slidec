@@ -1,5 +1,5 @@
-#!/usr/bin/env python 
-import sys
+#!/usr/bin/env python
+import argparse
 from rich.console import Console
 from rich.markdown import Markdown
 import readchar
@@ -7,9 +7,9 @@ import subprocess
 
 
 def read_markdown(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         content = f.read()
-    slides = content.split('\n---\n')
+    slides = content.split("\n---\n")
     return slides
 
 
@@ -38,14 +38,14 @@ def go_to_slide(slides, current):
     slide_lines = create_slide_list_for_fzf(slides)
     # Join all slides into a single string input for fzf
     fzf_input = "\n".join(slide_lines) + "\n"
-    
+
     # Run fzf
     try:
         result = subprocess.run(
             ["fzf", "--prompt=Slide>", "--reverse", "--height=30%"],
             input=fzf_input,
             text=True,
-            capture_output=True
+            capture_output=True,
         )
     except FileNotFoundError:
         Console.print("[red]Error:[/red] fzf not found. Install fzf to use this.")
@@ -57,8 +57,8 @@ def go_to_slide(slides, current):
     selected_line = result.stdout.strip()
     prefix = "(slide "
     if selected_line.startswith(prefix):
-        remainder = selected_line[len(prefix):]
-        parts = remainder.split('):', 1)
+        remainder = selected_line[len(prefix) :]
+        parts = remainder.split("):", 1)
         slide_number_str = parts[0].strip()
         try:
             slide_number = int(slide_number_str)
@@ -73,35 +73,36 @@ def navigate_slides(slides):
     console = Console()
     current = 0
     total = len(slides)
-    
+
     while True:
         render_slide(slides[current], console)
         console.print("\n")
         console.print(f"[bold yellow]{current + 1}/{total}[/bold yellow]")
         # console.print("Press 'n' for next, 'p' for previous, 'q' to quit.")
-        
+
         key = readchar.readkey()
-        if key.lower() in ['n', 'j']:
+        if key.lower() in ["n", "j"]:
             if current < total - 1:
                 current += 1
-        elif key.lower() in ['p', 'k']:
+        elif key.lower() in ["p", "k"]:
             if current > 0:
                 current -= 1
-        elif key.lower() == 'g':
+        elif key.lower() == "g":
             # Go to a selected slide via fzf
             current = go_to_slide(slides, current)
-        elif key.lower() == 'q':
+        elif key.lower() == "q":
             console.print("Exiting presentation.", style="bold red")
             break
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python slide_presenter.py path/to/slides.md")
-        sys.exit(1)
-    
-    file_path = sys.argv[1]
-    slides = read_markdown(file_path)
+    parser = argparse.ArgumentParser(
+        description="Slidec - A Terminal-based Markdown Slide Presenter"
+    )
+    parser.add_argument("file", help="Path to the Markdown file containing slides")
+    args = parser.parse_args()
+
+    slides = read_markdown(args.file)
     navigate_slides(slides)
 
 
