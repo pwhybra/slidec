@@ -46,7 +46,7 @@ Once in presentation mode
 
 - Next slide: `n` or `j`
 - Previous slide: `p` or `k`
-- Select slide: `g` navigate with fuzzy search 
+- Select slide: `g` navigate with fuzzy search (requires [`fzf`](https://github.com/junegunn/fzf))
 - quit: `q`
 
 ## Inspiration
