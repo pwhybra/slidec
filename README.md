@@ -27,13 +27,27 @@ E.g.
 
 - More content
 
-
 ```
 
 ## Run 
 ```terminal
 python slidec.py example_slides.md
 ```
+
+## Setup dependencies
+
+In your chosen python environment, install the requirements
+```terminal
+pip install requirements/requirements.txt
+```
+
+## Navigation
+Once in presentation mode
+
+- Next slide: `n` or `j`
+- Previous slide: `p` or `k`
+- Select slide: `g` navigate with fuzzy search 
+- quit: `q`
 
 ## Inspiration
 
