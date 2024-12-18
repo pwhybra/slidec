@@ -31,14 +31,15 @@ E.g.
 
 ## Run 
 ```terminal
-python slidec.py example_slides.md
+slidec example_slides.md
 ```
 
-## Setup dependencies
+## Install
 
-In your chosen python environment, install the requirements
+### Dev
+In chosen python environment, from repo root directory, run 
 ```terminal
-pip install requirements/requirements.txt
+pip install -e .
 ```
 
 ## Navigation
@@ -57,3 +58,5 @@ e.g. lookatme, slides
 
 However, I found I could get all the functionality I wanted in a single small python
 script with very little overhead.
+
+As an exercise, I turned it into a small python package.
