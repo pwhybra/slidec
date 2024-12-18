@@ -69,8 +69,11 @@ def go_to_slide(slides, current):
         return current
 
 
-def navigate_slides(slides):
+def present(file):
+    """Present markdown slide text in console."""
     console = Console()
+
+    slides = read_markdown(file)
     current = 0
     total = len(slides)
 
@@ -90,6 +93,13 @@ def navigate_slides(slides):
         elif key.lower() == "g":
             # Go to a selected slide via fzf
             current = go_to_slide(slides, current)
+        elif key.lower() == "r":
+            # Reload
+            slides = read_markdown(file)
+            total = len(slides)
+            if current >= total:
+                current = total - 1
+
         elif key.lower() == "q":
             console.print("Exiting presentation.", style="bold red")
             break
@@ -102,8 +112,7 @@ def main():
     parser.add_argument("file", help="Path to the Markdown file containing slides")
     args = parser.parse_args()
 
-    slides = read_markdown(args.file)
-    navigate_slides(slides)
+    present(args.file)
 
 
 if __name__ == "__main__":
