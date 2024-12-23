@@ -43,11 +43,23 @@ slidec example_slides.md
 
 ## Install
 
+The easiest way to install is via pip:
+
+```terminal
+pip install slidec
+```
+
+<details>
+
+<summary>Dev install </summary>
+
 ### Dev
 In chosen python environment, from repo root directory, run
 ```terminal
 pip install -e .
 ```
+
+</details>
 
 ## Navigation
 Once in presentation mode
